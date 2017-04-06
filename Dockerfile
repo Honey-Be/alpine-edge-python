@@ -27,6 +27,7 @@ ENV CXX=clang++
 
 RUN set -ex \
         && apk add --no-cache --update \
+	        binutils \
 		llvm \
 		llvm-libs \
                 clang \
