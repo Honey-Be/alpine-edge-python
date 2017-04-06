@@ -65,14 +65,15 @@ RUN set -ex \
 		tcl-dev \
 		tk \
 		tk-dev \
-		zlib-dev \
+		zlib-dev
 # add build deps before removing fetch deps in case there's overlap
 	&& apk del .fetch-deps \
 	\
 	&& cd /usr/src/python \
-	&& CC=$CC ./configure \
+	&& ./configure \
 		--enable-shared \
 		--enable-unicode=ucs4 \
+		CC=$CC CXX=$CXX
 	&& make -j$(getconf _NPROCESSORS_ONLN) \
 	&& make install \
 	\
