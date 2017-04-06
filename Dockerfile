@@ -18,6 +18,10 @@ ENV LIBRESSL_VERSION 2.4
 # if this is called "PIP_VERSION", pip explodes with "ValueError: invalid truth value '<VERSION>'"
 ENV PYTHON_PIP_VERSION 9.0.1
 
+
+RUN apk add clang clang-libs llvm ;;vm-libs 
+
+
 ENV CC=clang
 ENV CXX=clang++
 
