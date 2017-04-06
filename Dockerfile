@@ -21,19 +21,24 @@ ENV PYTHON_PIP_VERSION 9.0.1
 ENV CC=clang
 ENV CXX=clang++
 
+ENV CPP="clang -E"
+ENV CXXCPP="clang++ -E"
+
 RUN set -ex \
-                  && apk add --no-cache --update \
-		                   llvm \
-				   llvm-libs \
-                                   clang \
-				   clang-libs \
-				   libressl \
-                                   libressl$LIBRESSL_VERSION-libssl \
-                                   libressl$LIBRESSL_VERSION-libtls \
-                                   libressl$LIBRESSL_VERSION-libcrypto \
+        && apk add --no-cache --update \
+		llvm \
+		llvm-libs \
+                clang \
+		clang-libs \
+		libressl \
+                libressl$LIBRESSL_VERSION-libssl \
+                libressl$LIBRESSL_VERSION-libtls \
+                libressl$LIBRESSL_VERSION-libcrypto \
 	&& apk add --no-cache --virtual .fetch-deps \
 		gnupg \
-                                   libressl \
+		clang \
+		llvm \
+                libressl \
 		tar \
 		xz \
 	\
@@ -56,9 +61,9 @@ RUN set -ex \
 		make \
 		ncurses-dev \
 		libressl \
-                                   libressl$LIBRESSL_VERSION-libssl \
-                                   libressl$LIBRESSL_VERSION-libtls \
-                                   libressl$LIBRESSL_VERSION-libcrypto \
+                libressl$LIBRESSL_VERSION-libssl \
+                libressl$LIBRESSL_VERSION-libtls \
+                libressl$LIBRESSL_VERSION-libcrypto \
 		libressl-dev \
 		pax-utils \
 		readline-dev \
@@ -67,6 +72,7 @@ RUN set -ex \
 		tk \
 		tk-dev \
 		zlib-dev \
+		expat-dev \
 	\
 	&& apk del .fetch-deps \
 	\
@@ -74,7 +80,14 @@ RUN set -ex \
 	&& ./configure \
 		--enable-shared \
 		--enable-unicode=ucs4 \
+		--enable-ipv6 \
+		--with-threads \
+		--with-system-ffi \
+		--with-system-expat \
+		--with-system-zlib \
 		CC=$CC CXX=$CXX \
+		CPP=$CPP CXXCPP=$CXXCPP \
+		CFLAGS="-O3" CXXFLAGS="-O3" \
 	&& make -j$(getconf _NPROCESSORS_ONLN) \
 	&& make install \
 	\
