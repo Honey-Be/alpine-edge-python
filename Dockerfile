@@ -24,7 +24,9 @@ ENV CXX=clang++
 
 RUN set -ex \
                   && apk add --no-cache --update \
-                                   libressl \
+                                   clang \
+				   clang-libs \
+				   libressl \
                                    libressl$LIBRESSL_VERSION-libssl \
                                    libressl$LIBRESSL_VERSION-libtls \
                                    libressl$LIBRESSL_VERSION-libcrypto \
