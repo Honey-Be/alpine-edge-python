@@ -82,6 +82,7 @@ RUN set -ex \
 		--with-system-ffi \
 		--with-system-expat \
 		--with-system-zlib \
+		--without-gcc \
 		CC=$CC CXX=$CXX \
 		CFLAGS="-O3" CXXFLAGS="-O3" \
 	&& make -j$(getconf _NPROCESSORS_ONLN) \
