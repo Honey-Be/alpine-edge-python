@@ -1,4 +1,4 @@
-﻿FROM alpine:edge
+FROM alpine:edge
 
 # ensure local python is preferred over distribution python
 ENV PATH /usr/local/bin:$PATH
@@ -11,7 +11,6 @@ ENV LANG C.UTF-8
 # the other runtime dependencies for Python are installed later
 RUN apk add --no-cache ca-certificates
 
-ENV GPG_KEY C01E1CAD5EA2C4F0B8E3571504C367C218ADD4FF
 ENV PYTHON_VERSION 2.7.13
 
 ENV LIBRESSL_VERSION 2.4
@@ -39,9 +38,8 @@ RUN set -ex \
 	&& wget -O python.tar.xz "https://www.python.org/ftp/python/${PYTHON_VERSION%%[a-z]*}/Python-$PYTHON_VERSION.tar.xz" \
 	&& wget -O python.tar.xz.asc "https://www.python.org/ftp/python/${PYTHON_VERSION%%[a-z]*}/Python-$PYTHON_VERSION.tar.xz.asc" \
 	&& export GNUPGHOME="$(mktemp -d)" \
-	&& gpg --keyserver ha.pool.sks-keyservers.net --recv-keys "$GPG_KEY" \
-	&& gpg --batch --verify python.tar.xz.asc python.tar.xz \
-	&& rm -r "$GNUPGHOME" python.tar.xz.asc \
+	&& wget -O pubkeys.txt "https://www.python.org/static/files/pubkeys.txt" \
+	&& gpg --import pubkeys.txt \
 	&& mkdir -p /usr/src/python \
 	&& tar -xJC /usr/src/python --strip-components=1 -f python.tar.xz \
 	&& rm python.tar.xz \
