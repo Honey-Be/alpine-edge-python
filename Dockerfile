@@ -21,9 +21,6 @@ ENV PYTHON_PIP_VERSION 9.0.1
 ENV CC=clang
 ENV CXX=clang++
 
-ENV CPP="clang -E"
-ENV CXXCPP="clang++ -E"
-
 RUN set -ex \
         && apk add --no-cache --update \
 		llvm \
@@ -86,7 +83,6 @@ RUN set -ex \
 		--with-system-expat \
 		--with-system-zlib \
 		CC=$CC CXX=$CXX \
-		CPP=$CPP CXXCPP=$CXXCPP \
 		CFLAGS="-O3" CXXFLAGS="-O3" \
 	&& make -j$(getconf _NPROCESSORS_ONLN) \
 	&& make install \
