@@ -19,7 +19,7 @@ ENV LIBRESSL_VERSION 2.4
 ENV PYTHON_PIP_VERSION 9.0.1
 
 
-RUN apk add --no-cache clang clang-libs llvm llvm-libs 
+RUN apk add --no-cache clang clang-libs llvm llvm-libs alpine-sdk
 
 
 ENV CC=clang
@@ -86,9 +86,8 @@ RUN set -ex \
 		--with-system-ffi \
 		--with-system-expat \
 		--with-system-zlib \
-		--without-gcc \
 		CC=$CC CXX=$CXX \
-		CFLAGS="-O3" CXXFLAGS="-O3" \
+		CFLAGS="-O3 -Qunused-arguments" CXXFLAGS="-O3" CPPFLAGS="-Qunused-arguments" CXXCPPFLAGS="-Qunused-arguments" \
 	&& make -j$(getconf _NPROCESSORS_ONLN) \
 	&& make install \
 	\
