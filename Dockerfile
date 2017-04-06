@@ -19,7 +19,7 @@ ENV LIBRESSL_VERSION 2.4
 ENV PYTHON_PIP_VERSION 9.0.1
 
 
-RUN apk add clang clang-libs llvm ;;vm-libs 
+RUN apk add clang clang-libs llvm llvm-libs 
 
 
 ENV CC=clang
