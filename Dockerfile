@@ -48,7 +48,8 @@ RUN set -ex \
 	\
 	&& apk add --no-cache --virtual .build-deps  \
 		bzip2-dev \
-		clang \
+		llvm-dev \
+		clang-dev \
 		gdbm-dev \
 		libc-dev \
 		linux-headers \
